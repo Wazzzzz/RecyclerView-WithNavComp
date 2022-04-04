@@ -6,21 +6,24 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.mycontact.R
 import com.example.mycontact.User
 import com.example.mycontact.UserAdapter
+import com.example.mycontact.databinding.FragmentFirstBinding
 
 class FirstFragment : Fragment() {
 
-    lateinit var recyclerView: RecyclerView
+    private var _binding: FragmentFirstBinding? = null
+    private val binding get() = _binding!!
+//    lateinit var recyclerView: RecyclerView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_first, container, false)
+        _binding = FragmentFirstBinding.inflate(inflater, container, false)
+        return binding.root
+//        return inflater.inflate(R.layout.fragment_first, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -34,14 +37,20 @@ class FirstFragment : Fragment() {
             User("Radit", +6281345453636)
         )
 
-        recyclerView = view.findViewById(R.id.rv_first_fragment)
+
         val userAdapter = UserAdapter(listContact)
         val layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-        recyclerView.layoutManager = layoutManager
-        recyclerView.adapter = userAdapter
+        binding.rvFirstFragment.layoutManager = layoutManager
+        binding.rvFirstFragment.adapter = userAdapter
 
 
 
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
+
 
 }
